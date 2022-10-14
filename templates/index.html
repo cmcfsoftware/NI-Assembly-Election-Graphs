@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Index Page{% endblock %}
+{% block body %}
+
+
+<div class="container mb-3">
+    <h1>Hello Index Page</h1>
+    {% set carousel_id= "carouselControls"+year|string%}
+
+    <h1>{{'#'+carousel_id}}</h1>
+
+    <img class="img-fluid" src="static/NI_Boundaries.png" alt="test image">
+</div>
+
+
+{% endblock %}

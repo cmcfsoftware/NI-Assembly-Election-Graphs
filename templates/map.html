@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}NI Assembly Election Graphs{% endblock %}
+
+{% block head %} <link rel="stylesheet" href="/static/map_api_requirements/map_style.css"> {% endblock %}
+
+{% block body %}
+    <div class="container mb-3 mt-3">
+        <h2>Select a constituency to be taken to its result page</h2>
+
+        <div style="height:400px">
+            <div id="map" style="position: relative; overflow: hidden;"></div>
+            <div id="info-box">Hover over a constituency</div>
+        </div>
+    
+        <script src="/static/map_api_requirements/map_script.js"></script>
+    
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXcGdhgSHDenASHhjEwFdHyTfIYdTq1uo&callback=initMap">
+        </script>
+    </div>
+
+
+{% endblock %}

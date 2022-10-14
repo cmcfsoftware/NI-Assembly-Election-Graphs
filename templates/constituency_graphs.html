@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}{{response["constituency_name"]}} results{% endblock %}
+{% block body %}
+
+
+<div class="container mb-3">
+    <h1>Constituency {{response["constituency_name"]}} </h1>
+
+    <div><label for="inlineRadio" class="form-label">Select the year that you wish to see election graphs for:</label></div>
+
+    {%for result in response["results"] %}
+      {% set radio_id= "inlineRadio"+result["year"]|string%}
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id={{radio_id}} onclick="check(this.value)" value={{result["year"]|string}}>
+        <label class="form-check-label" for={{radio_id}}>{{result["year"]|string}}</label>
+      </div>
+    {%endfor%}
+
+    <br>
+    <br>
+
+    {%for result in response["results"] %}
+
+    {% set section_id= "graph"+result["year"]|string%}
+      
+
+      
+
+
+
+
+
+      <div id={{section_id}}>
+
+        <div>
+          <h2>Voter Statistics</h2>
+          {% set image_src="/"+response["url_start"].replace("\\", "/")+result["year"]|string+"/"+response["constituency_name"]+"/Party_Pie_Distributions/"+response["constituency_name"]+"_voter_stats.png"%}
+          <img class="img-thumbnail mb-5" src={{image_src}} alt="voter stats">
+        </div>
+
+        <h2>Bar graphs showing the vote transfers and result at each stage of the voting count</h2>
+
+
+        {% set carousel_id= "carouselControls"+result["year"]|string%}
+        <div id={{carousel_id}} class="carousel carousel-dark slide carousel-fade border mb-5" data-bs-ride="carousel" data-bs-interval="false">
+          <div class="carousel-inner">
+            {%for i in range(1, result["total_counts"])%}
+              {%for j in range(1, 4)%}
+                {% set image_src="/"+response["url_start"].replace("\\", "/")+result["year"]|string+"/"+response["constituency_name"]+"/Count_"+i|string+"/Graph_"+j|string+".png"%}
+                {% set slide_id = result["year"]|string + "slide"+ i|string +"-"+ j|string %}
+                <div class="carousel-item" id={{slide_id}}>
+                  <img src={{image_src}} class="d-block w-100" alt="...">
+                </div>
+                {%endfor%}
+            {%endfor%}
+
+            <div class="carousel-item">
+              {% set image_src="/"+response["url_start"].replace("\\", "/")+result["year"]|string+"/"+response["constituency_name"]+"/Final_Result/Graph_1.png"%}
+              <img src={{image_src}} class="d-block w-100" alt="...">
+            </div>
+
+          </div>
+          <div><h1>{{result["year"]|string}}</h1></div>
+          <button class="carousel-control-prev" type="button" data-bs-target={{'#'+carousel_id}} data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target={{'#'+carousel_id}} data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        <div>
+          <h2>Pie charts showing the party distributions for {{response["constituency_name"]}}</h2>
+          {% set image_src="/"+response["url_start"].replace("\\", "/")+result["year"]|string+"/"+response["constituency_name"]+"/Party_Pie_Distributions/"+response["constituency_name"]+"_elected_candidates_parties.png"%}
+          <img class="img-thumbnail mb-5" src={{image_src}} alt="test image">
+      
+          {% set image_src="/"+response["url_start"].replace("\\", "/")+result["year"]|string+"/"+response["constituency_name"]+"/Party_Pie_Distributions/"+response["constituency_name"]+"_all_candidates_parties.png"%}
+          <img class="img-thumbnail mb-5" src={{image_src}} alt="test image">
+        </div>
+
+
+
+
+      </div>
+
+    {%endfor%}
+
+
+
+
+
+
+
+
+    
+
+
+
+
+</div>
+
+
+<script>
+  let years = {{response["years"]}};
+
+  document.getElementById("inlineRadio"+years[0]).setAttribute("checked", "");
+
+
+  for (let i = 0; i < years.length; i++) {
+    if(i != 0){
+      document.getElementById("graph"+years[i]).style.display = "none";
+    }
+    var slideElement = document.getElementById(years[i]+"slide1-1");
+    slideElement.classList.add("active")
+
+  }
+
+  function check(year) {
+    //console.log(year);
+    let caroId = "graph" + year;
+    console.log("Clicked: " + caroId);
+    
+    var carousel = document.getElementById(caroId);
+    carousel.style.display = "block";
+
+    //console.log(test);
+    for (let i = 0; i < years.length; i++) {
+      if(years[i] != year){
+        let carouselToHide = document.getElementById("graph"+years[i]);
+        carouselToHide.style.display = "none";
+        console.log(years[i]);
+      }
+    }
+
+
+
+  }
+</script>
+
+
+{% endblock %}
