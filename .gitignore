@@ -1,2 +1,4 @@
 using_venv.txt
 project_env
+.pytest_cache
+__pycache__
