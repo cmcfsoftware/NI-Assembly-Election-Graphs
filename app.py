@@ -11,11 +11,9 @@ def index():
 def show_user_profile(constituency_name):
 
     #get the number of counts for he constituency.
-    # 
     results_info = []
     years = [int(year) for year in os.listdir("static\\result_graphs")]
     for year in years:
-        #path = "static\\result_graphs\\" + str(year) +"\\" +constituency_name
         path = "static\\result_graphs\\{}\\{}".format(year, constituency_name)
         total_counts =  len(os.listdir(path))-2 
 
@@ -28,9 +26,6 @@ def show_user_profile(constituency_name):
 
     path = "static\\result_graphs\\2011\\" + constituency_name
     total_counts =  len(os.listdir(path))-2 # Final Result Doesn't count
- 
-    #"years":[int(year) for year in os.listdir("static\\result_graphs")]
-    #"total_counts":total_counts,
 
     response_object = {
         "url_start":"static/result_graphs/",
@@ -38,12 +33,8 @@ def show_user_profile(constituency_name):
         "results":results_info,
         "years":years
     }
+
     return render_template("constituency_graphs.html", response = response_object)
-
-
-@app.route("/map")
-def show_map():
-    return render_template("map.html")
 
 
 @app.route("/data")
