@@ -25,7 +25,7 @@ def show_user_profile(constituency_name):
 
 
     path = "static\\result_graphs\\2011\\" + constituency_name
-    total_counts =  len(os.listdir(path))-2 # Final Result Doesn't count
+    total_counts =  len(os.listdir(path))-2 # Final Result Doesn't count and pie charts
 
     response_object = {
         "url_start":"static/result_graphs/",
