@@ -14,11 +14,11 @@ def test_data_response_OK():
 
 def test_constituencies_response_OK():
     constituencies = []
-    with open("tests/constituencies.json") as f_in:
+    constituencies_path = os.path.join("tests", "constituencies.json")
+    with open(constituencies_path) as f_in:
         constituencies = json.loads(f_in.read())["constituencies"]
     
     for constituency in constituencies:
         path = "/results/{}".format(constituency)
         assert test_client.get(path).status == "200 OK"
-
 

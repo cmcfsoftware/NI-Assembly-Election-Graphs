@@ -11,10 +11,15 @@ def index():
 def show_user_profile(constituency_name):
 
     #get the number of counts for he constituency.
+    election_years_directory = os.path.join("static", "result_graphs")
+    years = [int(year) for year in os.listdir(election_years_directory)]
+
     results_info = []
-    years = [int(year) for year in os.listdir("static\\result_graphs")]
+    #years = [int(year) for year in os.listdir("static\\result_graphs")]
     for year in years:
-        path = "static\\result_graphs\\{}\\{}".format(year, constituency_name)
+        path = os.path.join(election_years_directory, str(year), constituency_name)
+        #path = "static\\result_graphs\\{}\\{}".format(year, constituency_name)
+
         total_counts =  len(os.listdir(path))-2 
 
         info_dictionary = {
@@ -24,8 +29,8 @@ def show_user_profile(constituency_name):
         results_info.append(info_dictionary)
 
 
-    path = "static\\result_graphs\\2011\\" + constituency_name
-    total_counts =  len(os.listdir(path))-2 # Final Result Doesn't count and pie charts
+    #path = "static\\result_graphs\\2011\\" + constituency_name
+    #total_counts =  len(os.listdir(path))-2 # Final Result Doesn't count and pie charts
 
     response_object = {
         "url_start":"static/result_graphs/",
