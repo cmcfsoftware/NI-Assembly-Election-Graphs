@@ -14,7 +14,7 @@ def test_data_response_OK():
 
 def test_constituencies_response_OK():
     constituencies = []
-    with open("tests\\constituencies.json") as f_in:
+    with open("tests/constituencies.json") as f_in:
         constituencies = json.loads(f_in.read())["constituencies"]
     
     for constituency in constituencies:
